@@ -21,6 +21,8 @@
 #define KEY_PIN          GET_PIN(A, 0)
 #define KEY_PRESS_VALUE  1
 
+void spi_test(void);
+
 void key_cb(struct my_button *button)
 {
     switch (button->event)
@@ -50,6 +52,7 @@ int main(void)
     key.pin = KEY_PIN;
     my_button_register(&key);
     my_button_start();
+		
 
     while (1)
     {
@@ -59,3 +62,35 @@ int main(void)
 
     return RT_EOK;
 }
+
+#define SPI_BUS_NAME             "spi1"
+#define SPI_LIS302DL_DEVICE_NAME "spi10"
+
+struct stm32_hw_spi_cs
+{
+    rt_uint32_t pin;
+};
+
+static struct stm32_hw_spi_cs spi_cs;
+static struct rt_spi_device spi_dev_lis302dl;
+
+void spi_test(void)
+{
+    rt_err_t res;
+
+    res = rt_spi_bus_attach_device(&spi_dev_lis302dl, SPI_LIS302DL_DEVICE_NAME, SPI_BUS_NAME, (void*)&spi_cs);
+    if (res != RT_EOK)
+    {
+        rt_kprintf("rt_spi_bus_attach_device failed!\r\n");
+    }
+    else
+    {
+        rt_kprintf("rt_spi_bus_attach_device OK!\r\n");
+    }
+    
+}
+static int rt_hw_ssd1351_init(void)
+{
+    spi_test();
+}
+INIT_PREV_EXPORT(rt_hw_ssd1351_init);
