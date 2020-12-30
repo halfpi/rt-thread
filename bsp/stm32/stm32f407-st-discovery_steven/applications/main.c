@@ -44,6 +44,8 @@ void key_cb(struct my_button *button)
 
 int main(void)
 {
+    char str[50];
+
     rt_pin_mode(LED4_PIN, PIN_MODE_OUTPUT);
     rt_pin_mode(LED5_PIN, PIN_MODE_OUTPUT);
 
@@ -58,6 +60,13 @@ int main(void)
     while (1)
     {
         rt_pin_write(LED5_PIN, !rt_pin_read(LED5_PIN));
+
+        lis3dsh_data_t data;
+        lis3dsh_data_output(&data);
+        sprintf(str, "x %.2f, y %.2f, z %.2f, temp %.2f\r\n", data.xl.mg[0], data.xl.mg[1], 
+                   data.xl.mg[2], data.heat.deg_c);
+        rt_kprintf(str);
+
         rt_thread_mdelay(500);
     }
 

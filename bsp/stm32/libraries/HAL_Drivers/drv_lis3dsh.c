@@ -6,9 +6,6 @@
 #include "lis3dsh_reg.h"
 
 
-#define SPI_BUS_NAME             "spi1"
-#define SPI_LIS3DSH_DEVICE_NAME  "spi10"
-
 static int lis3dsh_init(void)
 {
     __HAL_RCC_GPIOE_CLK_ENABLE();

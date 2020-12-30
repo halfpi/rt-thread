@@ -10,7 +10,8 @@
 
 static struct rt_spi_device *spi_device;
 
-static stmdev_ctx_t spi_ctx;
+static stmdev_ctx_t lis3dsh_ctx;
+static lis3dsh_md_t lis3dsh_md;
 
 static void spi_read_op(struct rt_spi_device *spi_device, uint8_t reg, uint8_t *data, uint32_t len)
 {
@@ -62,12 +63,24 @@ rt_err_t lis3dsh_attach(const char *spi_device_name)
     spi_read_op(spi_device, LIS3DSH_WHO_AM_I, &id, 1); // 读回WHO_AM_I为0x3F
 
     // 连接lis3dsh_reg
-    spi_ctx.read_reg = (stmdev_read_ptr)spi_read_reg;
-    spi_ctx.write_reg = (stmdev_write_ptr)spi_write_reg;
+    lis3dsh_ctx.read_reg = (stmdev_read_ptr)spi_read_reg;
+    lis3dsh_ctx.write_reg = (stmdev_write_ptr)spi_write_reg;
 
     // 注意开发板不要接逻辑分析仪，可能会干扰读数
     lis3dsh_id_t lis3dsh_id;
-    lis3dsh_id_get(&spi_ctx, &lis3dsh_id);
+    lis3dsh_id_get(&lis3dsh_ctx, &lis3dsh_id);
 
+    lis3dsh_init_set(&lis3dsh_ctx, LIS3DSH_DRV_RDY);
+
+    lis3dsh_md.odr = LIS3DSH_25Hz;
+    lis3dsh_md.fs = LIS3DSH_8g;
+    lis3dsh_mode_set(&lis3dsh_ctx, &lis3dsh_md);
+
+    return 0;
+}
+
+int32_t lis3dsh_data_output(lis3dsh_data_t *data)
+{
+    lis3dsh_data_get(&lis3dsh_ctx, &lis3dsh_md, data);
     return 0;
 }
