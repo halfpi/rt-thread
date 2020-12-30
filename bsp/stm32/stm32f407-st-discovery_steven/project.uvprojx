@@ -54,7 +54,7 @@
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>0</BrowseInformation>
+          <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\build\keil\List\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -551,6 +551,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\components\drivers\src\workqueue.c</FilePath>
             </File>
+            <File>
+              <FileName>lis3dsh_reg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\lis3dsh_reg.c</FilePath>
+            </File>
+            <File>
+              <FileName>lis3dsh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\lis3dsh.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -590,6 +600,11 @@
               <FileName>drv_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\libraries\HAL_Drivers\drv_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_lis3dsh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\HAL_Drivers\drv_lis3dsh.c</FilePath>
             </File>
           </Files>
         </Group>

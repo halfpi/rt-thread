@@ -12,6 +12,8 @@
 #include <rtdevice.h>
 #include <board.h>
 #include "button.h"
+#include "lis3dsh.h"
+#include <stdio.h>
 
 /* defined the LED4 pin: PD12 */
 #define LED4_PIN    GET_PIN(D, 12)
@@ -53,7 +55,6 @@ int main(void)
     my_button_register(&key);
     my_button_start();
 		
-
     while (1)
     {
         rt_pin_write(LED5_PIN, !rt_pin_read(LED5_PIN));
@@ -62,35 +63,3 @@ int main(void)
 
     return RT_EOK;
 }
-
-#define SPI_BUS_NAME             "spi1"
-#define SPI_LIS302DL_DEVICE_NAME "spi10"
-
-struct stm32_hw_spi_cs
-{
-    rt_uint32_t pin;
-};
-
-static struct stm32_hw_spi_cs spi_cs;
-static struct rt_spi_device spi_dev_lis302dl;
-
-void spi_test(void)
-{
-    rt_err_t res;
-
-    res = rt_spi_bus_attach_device(&spi_dev_lis302dl, SPI_LIS302DL_DEVICE_NAME, SPI_BUS_NAME, (void*)&spi_cs);
-    if (res != RT_EOK)
-    {
-        rt_kprintf("rt_spi_bus_attach_device failed!\r\n");
-    }
-    else
-    {
-        rt_kprintf("rt_spi_bus_attach_device OK!\r\n");
-    }
-    
-}
-static int rt_hw_ssd1351_init(void)
-{
-    spi_test();
-}
-INIT_PREV_EXPORT(rt_hw_ssd1351_init);
