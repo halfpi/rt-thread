@@ -244,6 +244,9 @@
 #define ULOG_OUTPUT_THREAD_NAME
 #define ULOG_BACKEND_USING_CONSOLE
 #define ULOG_USING_FILTER
+#define RT_USING_UTEST
+#define UTEST_THR_STACK_SIZE 4096
+#define UTEST_THR_PRIORITY 20
 #define RT_USING_LWP
 
 /* RT-Thread online packages */
